@@ -78,6 +78,7 @@ body {
   display: none;
   width: 60vh;
   height: 60vh;
+  touch-action: manipulation;
 }
 
 .tap-button.show {
