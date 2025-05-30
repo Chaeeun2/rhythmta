@@ -84,7 +84,10 @@ class BPMCalculator {
         // change-music 클릭 이벤트 추가
         const changeMusic = document.querySelector('.change-music');
         if (changeMusic) {
-            changeMusic.addEventListener('click', () => this.reset());
+            changeMusic.addEventListener('click', (e) => {
+                e.stopPropagation(); // 이벤트 전파 중단
+                this.reset();
+            });
         }
     }
     
@@ -105,7 +108,7 @@ class BPMCalculator {
         const now = Date.now();
         this.tapTimes.push(now);
         
-        // 탭 카운트 업데이트
+        // 탭 카운트 업데이트 (탭 추가 후)
         if (this.tabCount) {
             this.tabCount.textContent = `${this.tapTimes.length}/${this.maxTaps}`;
         }
@@ -251,6 +254,7 @@ class BPMCalculator {
         // 탭 카운트 초기화
         if (this.tabCount) {
             this.tabCount.textContent = "0/8";
+            this.tabCount.style.display = 'block';
         }
         
         // 모든 BPM 텍스트 숨기기
@@ -259,7 +263,6 @@ class BPMCalculator {
             text.classList.remove('show');
         });
         changeMusic.style.display = 'none';
-        this.tabCount.style.display = 'block';
     }
 }
 
