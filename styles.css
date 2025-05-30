@@ -67,40 +67,12 @@ body {
   }
 }
 
-.tap-button {
-  background: rgb(214, 0, 0);
-  color: white;
-  border: none;
+.tabCount {
   font-size: 3rem;
-  border-radius: 1000px;
-  cursor: pointer;
-  margin: 1rem 0;
-  display: none;
-  width: 60vh;
-  height: 60vh;
-  touch-action: manipulation;
-}
-
-.tap-button.show {
-  display: inline-block;
-}
-
-.tap-button:hover {
-  background: rgb(169, 0, 0);
-}
-
-.tap-button:active {
-  background: rgb(214, 0, 0);
-}
-
-.tap-count {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  color: #ddd;
   display: none;
 }
 
-.tap-count.show {
+.tapCount.show {
   display: block;
 }
 
@@ -143,9 +115,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .tap-button {
-    width: 70vw;
-    height: 70vw;
+  .tapCount {
     font-size: 1.8em;
   }
 

@@ -6,16 +6,9 @@ class BPMCalculator {
     constructor() {
         this.tapTimes = [];
         this.maxTaps = 8;
-        this.tapButton = document.getElementById('tapButton');
-        this.tapCountDisplay = document.getElementById('tapCount');
+        this.tabCount = document.querySelector('.tabCount');
         this.bpmTextInterval = null;
         this.currentTextIndex = 0;
-        
-        // 필수 요소 체크
-        if (!this.tapButton) {
-            console.error('Tap button element not found');
-            return;
-        }
         
         // 카운트다운 요소 미리 생성
         this.countdownElement = document.createElement('div');
@@ -69,9 +62,9 @@ class BPMCalculator {
                 currentIndex++;
                 setTimeout(showNextInstruction, 1000);
             } else {
-                // 모든 지시사항이 표시된 후 버튼과 탭 카운트 표시
+                // 모든 지시사항이 표시된 후 지시사항 숨기기
                 instructionWrap.style.display = 'none';
-                this.tapButton.classList.add('show');
+                this.tabCount.style.display = 'block';
             }
         };
 
@@ -80,7 +73,7 @@ class BPMCalculator {
     }
     
     initializeEventListeners() {
-        this.tapButton.addEventListener('click', () => this.handleTap());
+        document.body.addEventListener('click', () => this.handleTap());
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
                 e.preventDefault();
@@ -102,34 +95,32 @@ class BPMCalculator {
 
         if (currentBg) {
             document.body.style.backgroundColor = bgList[0];
+            this.tabCount.style.color = bgList[1];
             currentBg = false;
         } else {
             document.body.style.backgroundColor = bgList[1];
+            this.tabCount.style.color = bgList[0];
             currentBg = true;
         }
         const now = Date.now();
         this.tapTimes.push(now);
         
-        // 버튼 텍스트 업데이트
-        this.tapButton.textContent = `${this.tapTimes.length}/${this.maxTaps}`;
-        
-        // tapCountDisplay가 있을 때만 업데이트
-        if (this.tapCountDisplay) {
-            this.tapCountDisplay.textContent = this.tapTimes.length;
+        // 탭 카운트 업데이트
+        if (this.tabCount) {
+            this.tabCount.textContent = `${this.tapTimes.length}/${this.maxTaps}`;
         }
         
         if (this.tapTimes.length === this.maxTaps) {
             // BPM 미리 계산
             const bpm = this.calculateBPM();
             
-            // 버튼 숨기기와 카운트다운을 동시에 시작
-            this.tapButton.style.display = "none";
+            // 카운트다운 시작
+            this.tabCount.style.display = 'none';
             
             // 약간의 지연 후 다른 작업 실행
             setTimeout(() => {
-                document.body.style.backgroundColor = "black";
                 this.startCountdown(bpm);
-                this.tapButton.disabled = true;
+                document.body.style.backgroundColor = "black";
             }, (60 / bpm) * 1000 - 100);
         }
     }
@@ -221,20 +212,21 @@ class BPMCalculator {
         const interval = (60 / bpm) * 1000;
         let count = 3;
         
-        // 카운트다운 요소 표시
+        // 카운트다운 요소 표시 및 초기값 설정
         this.countdownElement.style.display = 'block';
+        this.countdownElement.textContent = count;
         
         const countdownInterval = setInterval(() => {
-            if (count >= 1) {
+            count--;
+            if (count >= 0) {
                 this.countdownElement.textContent = count;
-                count--;
             } else {
+                clearInterval(countdownInterval);
+                this.countdownElement.style.display = 'none';
                 // 카운트다운이 끝나면 BPM 텍스트 애니메이션 시작
                 setTimeout(() => {
                     this.startBPMTextAnimation();
                     changeMusic.style.display = 'block';
-                    clearInterval(countdownInterval);
-                this.countdownElement.style.display = 'none';
                 }, 0);
             }
         }, interval);
@@ -254,10 +246,12 @@ class BPMCalculator {
         
         // UI 초기화
         document.body.style.backgroundColor = "white";
-        this.tapButton.style.display = "block";
-        this.tapButton.disabled = false;
-        this.tapButton.textContent = "0/8";
         this.countdownElement.style.display = 'none';
+        
+        // 탭 카운트 초기화
+        if (this.tabCount) {
+            this.tabCount.textContent = "0/8";
+        }
         
         // 모든 BPM 텍스트 숨기기
         const allBpmTexts = document.querySelectorAll('.bpm80 p, .bpm100 p, .bpm120 p, .bpm140 p, .bpm160 p');
@@ -265,6 +259,7 @@ class BPMCalculator {
             text.classList.remove('show');
         });
         changeMusic.style.display = 'none';
+        this.tabCount.style.display = 'block';
     }
 }
 
