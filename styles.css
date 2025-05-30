@@ -1,0 +1,158 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+body {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  border-radius: 20px;
+}
+
+.instructions {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.instructions p {
+  display: none;
+  margin: 0.5rem 0;
+  font-size: 6em;
+  font-weight: bold;
+  color: black;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 900;
+}
+
+.instructions p.animate {
+  animation: textChange 1s ease forwards;
+}
+
+.instructions p.show {
+  display: block;
+}
+
+@keyframes textChange {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.tap-button {
+  background: rgb(214, 0, 0);
+  color: white;
+  border: none;
+  font-size: 3rem;
+  border-radius: 1000px;
+  cursor: pointer;
+  margin: 1rem 0;
+  display: none;
+  width: 60vh;
+  height: 60vh;
+}
+
+.tap-button.show {
+  display: inline-block;
+}
+
+.tap-button:hover {
+  background: rgb(169, 0, 0);
+}
+
+.tap-button:active {
+  background: rgb(214, 0, 0);
+}
+
+.tap-count {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: #ddd;
+  display: none;
+}
+
+.tap-count.show {
+  display: block;
+}
+
+.guide {
+  font-size: 2em;
+}
+
+.bpm80 {
+  margin: 0 30px;
+  text-align: center;
+}
+
+.guide p {
+  display: none;
+  font-size: 3em;
+  word-break: keep-all;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  line-height: 1.15;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 900;
+  padding: 0 30px;
+}
+
+.guide p.show {
+  display: block;
+  animation: textChange 1s ease forwards;
+}
+
+.change-music {
+  font-size: 1.2em;
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tap-button {
+    width: 70vw;
+    height: 70vw;
+    font-size: 1.8em;
+  }
+
+  .instructions p {
+    font-size: 4em;
+  }
+
+  .guide p {
+    font-size: 1.8em;
+  }
+}
